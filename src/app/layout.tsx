@@ -21,6 +21,25 @@ export const metadata: Metadata = {
   description: "Rhapsody of Realities Partnership Target 2026 - The Race For The Last Man. Submit your commitment and help impact nations globally.",
   icons: {
     icon: "/logo.webp",
+    apple: "/logo.webp",
+  },
+  openGraph: {
+    title: "Rhapsody Partnership Target 2026",
+    description: "Rhapsody of Realities Partnership Target 2026 - The Race For The Last Man. Submit your commitment and help impact nations globally.",
+    images: [
+      {
+        url: "/logo.webp",
+        width: 1200,
+        height: 630,
+        alt: "Rhapsody of Realities",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Rhapsody Partnership Target 2026",
+    description: "Rhapsody of Realities Partnership Target 2026 - The Race For The Last Man. Submit your commitment and help impact nations globally.",
+    images: ["/logo.webp"],
   },
 };
 
