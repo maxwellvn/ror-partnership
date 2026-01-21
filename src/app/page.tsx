@@ -45,7 +45,7 @@ export default function Home() {
   useEffect(() => {
     const fetchZones = async () => {
       try {
-        const response = await fetch('https://ippc.rorglobalpartnershipdepartment.org/zones.json');
+        const response = await fetch('/api/zones');
         if (response.ok) {
           const data = await response.json();
 
