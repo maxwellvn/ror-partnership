@@ -19,6 +19,9 @@ const playfair = Playfair_Display({
 export const metadata: Metadata = {
   title: "Rhapsody Partnership Target 2026",
   description: "Rhapsody of Realities Partnership Target 2026 - The Race For The Last Man. Submit your commitment and help impact nations globally.",
+  icons: {
+    icon: "/logo.webp",
+  },
 };
 
 export default function RootLayout({
