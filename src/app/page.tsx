@@ -48,20 +48,30 @@ export default function Home() {
         const response = await fetch('https://ippc.rorglobalpartnershipdepartment.org/zones.json');
         if (response.ok) {
           const data = await response.json();
-          // Handle different response formats
-          const zonesList = Array.isArray(data) ? data : (data.zones || []);
+
+          // Extract zones from nested structure (Regions -> Zones)
+          const zonesList: Zone[] = [];
+
+          // Iterate through each region
+          Object.values(data).forEach((region: any) => {
+            if (region && typeof region === 'object') {
+              // Each region contains zones as keys
+              Object.values(region).forEach((zone: any) => {
+                if (zone && typeof zone === 'object' && zone.name) {
+                  zonesList.push({ name: zone.name, id: zone.name });
+                } else if (typeof zone === 'string') {
+                  zonesList.push({ name: zone, id: zone });
+                }
+              });
+            }
+          });
+
+          // Sort zones alphabetically
+          zonesList.sort((a, b) => a.name.localeCompare(b.name));
           setZones(zonesList);
         }
       } catch (error) {
         console.error('Failed to fetch zones:', error);
-        // Fallback zones if API fails
-        setZones([
-          { name: 'CE1' },
-          { name: 'CE2' },
-          { name: 'CE3' },
-          { name: 'CW1' },
-          { name: 'CW2' },
-        ]);
       } finally {
         setZonesLoading(false);
       }
