@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Inter, Playfair_Display } from 'next/font/google';
 import styles from './page.module.css';
 
@@ -18,9 +18,16 @@ const playfair = Playfair_Display({
   style: ['normal', 'italic'],
 });
 
+interface Zone {
+  name: string;
+  id?: string;
+}
+
 export default function Home() {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitMessage, setSubmitMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [zones, setZones] = useState<Zone[]>([]);
+  const [zonesLoading, setZonesLoading] = useState(true);
 
   const [formData, setFormData] = useState({
     fullname: '',
@@ -34,7 +41,41 @@ export default function Home() {
     other_campaigns: '',
   });
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  // Fetch zones from API
+  useEffect(() => {
+    const fetchZones = async () => {
+      try {
+        const response = await fetch('https://ippc.rorglobalpartnershipdepartment.org/zones.json');
+        if (response.ok) {
+          const data = await response.json();
+          // Handle different response formats
+          const zonesList = Array.isArray(data) ? data : (data.zones || []);
+          setZones(zonesList);
+        }
+      } catch (error) {
+        console.error('Failed to fetch zones:', error);
+        // Fallback zones if API fails
+        setZones([
+          { name: 'CE1' },
+          { name: 'CE2' },
+          { name: 'CE3' },
+          { name: 'CW1' },
+          { name: 'CW2' },
+        ]);
+      } finally {
+        setZonesLoading(false);
+      }
+    };
+
+    fetchZones();
+  }, []);
+
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
+  };
+
+  const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
 
@@ -163,33 +204,38 @@ export default function Home() {
               {/* Section 1: Details */}
               <div className={styles.formSectionTitle}>Partner Details</div>
 
-              <div className={styles.row2}>
-                <div className={styles.inputGroup}>
-                  <label className={styles.label} htmlFor="fullname">Full Name <span style={{color: '#dc2626'}}>*</span></label>
-                  <input
-                    className={styles.input}
-                    type="text"
-                    id="fullname"
-                    name="fullname"
-                    placeholder="Enter Full Name"
-                    value={formData.fullname}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
-                <div className={styles.inputGroup}>
-                  <label className={styles.label} htmlFor="zone">Zone <span style={{color: '#dc2626'}}>*</span></label>
-                  <input
-                    className={styles.input}
-                    type="text"
-                    id="zone"
-                    name="zone"
-                    placeholder="Enter Zone"
-                    value={formData.zone}
-                    onChange={handleInputChange}
-                    required
-                  />
-                </div>
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="fullname">Full Name <span style={{color: '#dc2626'}}>*</span></label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  id="fullname"
+                  name="fullname"
+                  placeholder="Enter Full Name"
+                  value={formData.fullname}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="zone">Zone <span style={{color: '#dc2626'}}>*</span></label>
+                <select
+                  className={styles.input}
+                  id="zone"
+                  name="zone"
+                  value={formData.zone}
+                  onChange={handleInputChange}
+                  required
+                  disabled={zonesLoading}
+                >
+                  <option value="">{zonesLoading ? 'Loading zones...' : 'Select your zone'}</option>
+                  {zones.map((zone, index) => (
+                    <option key={zone.id || index} value={zone.name}>
+                      {zone.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Section 2: Main Targets */}
@@ -223,7 +269,7 @@ export default function Home() {
                       name="print_target"
                       placeholder="0"
                       value={formData.print_target}
-                      onChange={handleInputChange}
+                      onChange={handleNumberChange}
                       onBlur={handleNumberBlur}
                       required
                     />
@@ -239,7 +285,7 @@ export default function Home() {
                       name="digital_target"
                       placeholder="0"
                       value={formData.digital_target}
-                      onChange={handleInputChange}
+                      onChange={handleNumberChange}
                       onBlur={handleNumberBlur}
                       required
                     />
