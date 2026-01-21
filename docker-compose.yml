@@ -1,0 +1,37 @@
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ror-partnership
+    restart: unless-stopped
+    ports:
+      - "3000:3000"
+    environment:
+      - NODE_ENV=production
+      - MONGODB_URI=${MONGODB_URI}
+      - ADMIN_USERNAME=${ADMIN_USERNAME}
+      - ADMIN_PASSWORD=${ADMIN_PASSWORD}
+    env_file:
+      - .env
+    networks:
+      - ror-network
+
+  # Optional: MongoDB container (use external DB in production)
+  mongodb:
+    image: mongo:8
+    container_name: ror-mongodb
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    networks:
+      - ror-network
+
+volumes:
+  mongodb_data:
+
+networks:
+  ror-network:
+    driver: bridge
