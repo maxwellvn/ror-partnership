@@ -114,6 +114,11 @@ export default function Home() {
         setFormData((prev) => ({ ...prev, groupOther: '' }));
       }
     }
+
+    // When groupOther is typed directly (zone has no groups), clear group
+    if (name === 'groupOther' && value !== '') {
+      setFormData((prev) => ({ ...prev, group: '' }));
+    }
   };
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -305,40 +310,56 @@ export default function Home() {
                 </div>
               )}
 
-              <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="group">Group</label>
-                <select
-                  className={styles.input}
-                  id="group"
-                  name="group"
-                  value={formData.group}
-                  onChange={handleInputChange}
-                  disabled={!formData.zone && !showZoneOther}
-                >
-                  <option value="">{(!formData.zone && !showZoneOther) ? 'Select a zone first' : 'Select your group (optional)'}</option>
-                  {!showZoneOther && zones.find(z => z.name === formData.zone)?.groups?.map((group, index) => (
-                    <option key={group.id || index} value={group.name}>
-                      {group.name}
-                    </option>
-                  ))}
-                  {!showZoneOther && <option value="OTHER">Other (Specify below)</option>}
-                </select>
-              </div>
+              {formData.zone && !showZoneOther && zones.find(z => z.name === formData.zone)?.groups && zones.find(z => z.name === formData.zone)?.groups!.length > 0 ? (
+                <>
+                  <div className={styles.inputGroup}>
+                    <label className={styles.label} htmlFor="group">Group</label>
+                    <select
+                      className={styles.input}
+                      id="group"
+                      name="group"
+                      value={formData.group}
+                      onChange={handleInputChange}
+                    >
+                      <option value="">Select your group (optional)</option>
+                      {zones.find(z => z.name === formData.zone)?.groups?.map((group, index) => (
+                        <option key={group.id || index} value={group.name}>
+                          {group.name}
+                        </option>
+                      ))}
+                      <option value="OTHER">Other (Specify below)</option>
+                    </select>
+                  </div>
 
-              {showGroupOther && (
+                  {showGroupOther && (
+                    <div className={styles.inputGroup}>
+                      <label className={styles.label} htmlFor="groupOther">Specify Group</label>
+                      <input
+                        className={styles.input}
+                        type="text"
+                        id="groupOther"
+                        name="groupOther"
+                        placeholder="Enter your group name"
+                        value={formData.groupOther}
+                        onChange={handleInputChange}
+                      />
+                    </div>
+                  )}
+                </>
+              ) : formData.zone && !showZoneOther ? (
                 <div className={styles.inputGroup}>
-                  <label className={styles.label} htmlFor="groupOther">Specify Group</label>
+                  <label className={styles.label} htmlFor="groupOther">Group</label>
                   <input
                     className={styles.input}
                     type="text"
                     id="groupOther"
                     name="groupOther"
-                    placeholder="Enter your group name"
+                    placeholder="Enter your group name (optional)"
                     value={formData.groupOther}
                     onChange={handleInputChange}
                   />
                 </div>
-              )}
+              ) : null}
 
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="overall_target">Faith Goal - Total number of copies <span style={{color: '#dc2626'}}>*</span></label>
