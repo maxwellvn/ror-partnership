@@ -310,7 +310,10 @@ export default function Home() {
                 </div>
               )}
 
-              {formData.zone && !showZoneOther && zones.find(z => z.name === formData.zone)?.groups && zones.find(z => z.name === formData.zone)?.groups!.length > 0 ? (
+              {formData.zone && !showZoneOther && (() => {
+                const selectedZone = zones.find(z => z.name === formData.zone);
+                return selectedZone?.groups && selectedZone.groups.length > 0;
+              })() ? (
                 <>
                   <div className={styles.inputGroup}>
                     <label className={styles.label} htmlFor="group">Group</label>
