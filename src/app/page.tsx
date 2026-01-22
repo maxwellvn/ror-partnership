@@ -166,30 +166,21 @@ export default function Home() {
           <div className={styles.contentWrapper}>
             <img src="/logo.webp" alt="Rhapsody of Realities" className={styles.logo} />
             <div className={styles.eyebrow}>Partnership 2026</div>
-            <h1 className={styles.title}>The Race For The Last Man</h1>
+            <h1 className={styles.title}>YOUR 2026 PARTNERSHIP PLANS FOR THE ZONE</h1>
 
-            {/* Scripture */}
+            {/* Letter */}
             <div className={styles.scriptureBlock}>
-              <div className={styles.scriptureText}>
-                "And God is able to make all grace abound toward you; that ye, always having all sufficiency in all things, may abound to every good work."
-              </div>
-              <div className={styles.scriptureRef}>2 Corinthians 9:8</div>
-            </div>
-
-            {/* Pastor's Quote */}
-            <div className={styles.quoteSection}>
-              <p className={styles.quoteText}>
-                "We must realize that the Rhapsody of Realities is not just a book; it is a life-giving spirit. When we give towards its distribution, we are not just donating; we are partnering with heaven to alter the destiny of nations."
-              </p>
-              <span className={styles.quoteAuthor}>Rev. Chris Oyakhilome D.Sc., D.D.</span>
-            </div>
-
-            {/* Chat UI */}
-            <div className={styles.chatUi}>
-              <div className={styles.chatAvatar}>ROR</div>
-              <div className={styles.chatBubble}>
-                <strong>ROR Department</strong><br />
-                Thank you for your commitment to the vision of our Man of God. With your contribution, we are ready to break new records this year.
+              <div className={styles.scriptureText} style={{ textAlign: 'left', lineHeight: '1.8' }}>
+                <p><strong>Dear Esteemed Pastor,</strong></p>
+                <p>Warm greetings in the precious name of our Lord Jesus Christ.</p>
+                <p>What an incredible journey we've just experienced together—three powerful days of prayer and fasting with our dear man of God, Pastor Chris. Our hearts are still ablaze with the fresh fire and vision he imparted to us!</p>
+                <p>We are deeply grateful for your unwavering commitment and generous sponsorship in bringing Rhapsody of Realities to the nations. Your partnership has been instrumental in reaching precious souls with God's Word, and we honor you for your faithfulness.</p>
+                <p>As we step boldly into this <strong>Year of Manifestation</strong>, we carry the prophetic declaration that our capacity has increased 1000 times! The man of God has reminded us that the Lord has given us power to get wealth, and this year, we will surpass everything we've ever accomplished—1000 times over—as we race together to reach the last man with the Gospel.</p>
+                <p>We are confident that God has placed a specific vision in your heart for Rhapsody of Realities this year. Kindly share with us your overall faith goal and a breakdown for distribution (Print), digital, project sponsorship, so we can build a strategic plan together and work the miracles as we manifest the power of God through our combined efforts.</p>
+                <p>Please take a few moments to complete the form below with your ROR goals for this year of manifestation.</p>
+                <p style={{ marginTop: '20px' }}><strong>Thank you.</strong></p>
+                <p><strong>Global Partnership Department</strong><br />
+                Rhapsody of Realities.</p>
               </div>
             </div>
           </div>
