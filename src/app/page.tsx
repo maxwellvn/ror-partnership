@@ -215,17 +215,37 @@ export default function Home() {
               <div className={styles.formSectionTitle}>Personal Information</div>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="fullname">Name <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="fullname">Zonal Pastor <span style={{color: '#dc2626'}}>*</span></label>
                 <input
                   className={styles.input}
                   type="text"
                   id="fullname"
                   name="fullname"
-                  placeholder="Enter your name"
+                  placeholder="Enter Zonal Pastor's name"
                   value={formData.fullname}
                   onChange={handleInputChange}
                   required
                 />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="zone">Zone <span style={{color: '#dc2626'}}>*</span></label>
+                <select
+                  className={styles.input}
+                  id="zone"
+                  name="zone"
+                  value={formData.zone}
+                  onChange={handleInputChange}
+                  required
+                  disabled={zonesLoading}
+                >
+                  <option value="">{zonesLoading ? 'Loading zones...' : 'Select your zone'}</option>
+                  {zones.map((zone, index) => (
+                    <option key={zone.id || index} value={zone.name}>
+                      {zone.name}
+                    </option>
+                  ))}
+                </select>
               </div>
 
               {/* Section 2: Main Targets */}
