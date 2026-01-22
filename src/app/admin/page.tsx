@@ -13,13 +13,11 @@ interface Partnership {
   _id: string;
   fullname: string;
   zone?: string;
+  num_groups?: string;
   overall_target: string;
   print_target: string;
   digital_target: string;
-  wonder_sponsorship?: string;
-  project_sponsorship?: string;
-  crusade_sponsorship?: string;
-  other_campaigns?: string;
+  campaigns?: string;
   createdAt: string;
 }
 
@@ -165,8 +163,9 @@ export default function AdminPage() {
       overall: acc.overall + parseCopies(s.overall_target),
       print: acc.print + parseCopies(s.print_target),
       digital: acc.digital + parseCopies(s.digital_target),
+      groups: acc.groups + parseCopies(s.num_groups),
     }),
-    { overall: 0, print: 0, digital: 0 }
+    { overall: 0, print: 0, digital: 0, groups: 0 }
   );
 
   if (isLoading) {
@@ -707,6 +706,11 @@ export default function AdminPage() {
               <div className="stat-value">{totals.digital.toLocaleString()}</div>
               <div className="stat-sub">{totals.overall > 0 ? ((totals.digital / totals.overall) * 100).toFixed(1) : 0}% of total</div>
             </div>
+            <div className="stat-card">
+              <div className="stat-label">Total Groups</div>
+              <div className="stat-value">{totals.groups.toLocaleString()}</div>
+              <div className="stat-sub">Groups across all zones</div>
+            </div>
           </div>
 
           <div className="controls-bar">
@@ -737,6 +741,7 @@ export default function AdminPage() {
                       </span>
                     </th>
                     <th>Zone</th>
+                    <th>Groups</th>
                     <th onClick={() => handleSort('overall_target')}>
                       Overall Target
                       <span className={`sort-indicator ${sortBy === 'overall_target' ? 'active' : ''}`}>
@@ -745,7 +750,7 @@ export default function AdminPage() {
                     </th>
                     <th>Print</th>
                     <th>Digital</th>
-                    <th>Sponsorships</th>
+                    <th>Campaigns</th>
                     <th onClick={() => handleSort('createdAt')}>
                       Date
                       <span className={`sort-indicator ${sortBy === 'createdAt' ? 'active' : ''}`}>
@@ -760,19 +765,11 @@ export default function AdminPage() {
                     <tr key={submission._id}>
                       <td className="name-cell">{submission.fullname}</td>
                       <td>{submission.zone ? <span className="zone-badge">{submission.zone}</span> : '-'}</td>
+                      <td className="copies-cell">{submission.num_groups || '-'}</td>
                       <td className="copies-cell">{formatCopies(submission.overall_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.print_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.digital_target)}</td>
-                      <td>
-                        {(submission.wonder_sponsorship || submission.project_sponsorship || submission.crusade_sponsorship || submission.other_campaigns) ? (
-                          <span>
-                            {submission.wonder_sponsorship && `Wonder: ${submission.wonder_sponsorship} `}
-                            {submission.project_sponsorship && `Project: ${submission.project_sponsorship} `}
-                            {submission.crusade_sponsorship && `Crusade: ${submission.crusade_sponsorship} `}
-                            {submission.other_campaigns && `Other: ${submission.other_campaigns}`}
-                          </span>
-                        ) : '-'}
-                      </td>
+                      <td>{submission.campaigns || '-'}</td>
                       <td style={{ color: '#64748b', fontSize: '13px' }}>
                         {formatDate(submission.createdAt)}
                       </td>
@@ -805,6 +802,10 @@ export default function AdminPage() {
                     <div className="modal-label">Zone</div>
                     <div className="modal-value">{selectedSubmission.zone || 'Not specified'}</div>
                   </div>
+                  <div className="modal-row">
+                    <div className="modal-label">Number of Groups</div>
+                    <div className="modal-value">{selectedSubmission.num_groups || '0'}</div>
+                  </div>
                 </div>
 
                 <div className="modal-section">
@@ -826,29 +827,11 @@ export default function AdminPage() {
                 </div>
 
                 <div className="modal-section">
-                  <div className="modal-section-title">Campaign Sponsorships</div>
+                  <div className="modal-section-title">Campaigns</div>
                   <div className="modal-row">
-                    <div className="modal-label">Wonder Sponsorship</div>
+                    <div className="modal-label">Campaigns (Wonder, Crusades)</div>
                     <div className="modal-value">
-                      {selectedSubmission.wonder_sponsorship || '-'}
-                    </div>
-                  </div>
-                  <div className="modal-row">
-                    <div className="modal-label">Project Sponsorship</div>
-                    <div className="modal-value">
-                      {selectedSubmission.project_sponsorship || '-'}
-                    </div>
-                  </div>
-                  <div className="modal-row">
-                    <div className="modal-label">Crusade Sponsorship</div>
-                    <div className="modal-value">
-                      {selectedSubmission.crusade_sponsorship || '-'}
-                    </div>
-                  </div>
-                  <div className="modal-row">
-                    <div className="modal-label">Other Campaigns</div>
-                    <div className="modal-value">
-                      {selectedSubmission.other_campaigns || '-'}
+                      {selectedSubmission.campaigns || '-'}
                     </div>
                   </div>
                 </div>
