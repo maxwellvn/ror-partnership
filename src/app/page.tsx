@@ -152,7 +152,7 @@ export default function Home() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, submission_type: 'zonal' }),
       });
 
       const result = await response.json();

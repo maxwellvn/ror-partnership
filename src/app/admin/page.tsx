@@ -15,6 +15,7 @@ interface Partnership {
   zone?: string;
   num_groups?: string;
   group?: string;
+  submission_type?: 'zonal' | 'group';
   overall_target: string;
   print_target: string;
   digital_target: string;
@@ -57,6 +58,7 @@ export default function AdminPage() {
   const [sortOrder, setSortOrder] = useState<'asc' | 'desc'>('desc');
   const [selectedSubmission, setSelectedSubmission] = useState<Partnership | null>(null);
   const [showModal, setShowModal] = useState(false);
+  const [activeTab, setActiveTab] = useState<'all' | 'zonal' | 'group'>('all');
 
   useEffect(() => {
     checkAuth();
@@ -143,10 +145,18 @@ export default function AdminPage() {
   };
 
   const filteredAndSortedSubmissions = submissions
-    .filter((s) =>
-      s.fullname.toLowerCase().includes(searchTerm.toLowerCase()) ||
-      (s.zone && s.zone.toLowerCase().includes(searchTerm.toLowerCase()))
-    )
+    .filter((s) => {
+      const matchesSearch =
+        s.fullname.toLowerCase().includes(searchTerm.toLowerCase()) ||
+        (s.zone && s.zone.toLowerCase().includes(searchTerm.toLowerCase()));
+
+      const matchesTab =
+        activeTab === 'all' ||
+        (activeTab === 'zonal' && (!s.submission_type || s.submission_type === 'zonal')) ||
+        (activeTab === 'group' && s.submission_type === 'group');
+
+      return matchesSearch && matchesTab;
+    })
     .sort((a, b) => {
       let comparison = 0;
       if (sortBy === 'createdAt') {
@@ -159,7 +169,15 @@ export default function AdminPage() {
       return sortOrder === 'asc' ? comparison : -comparison;
     });
 
-  const totals = submissions.reduce(
+  const filteredSubmissions = activeTab === 'all'
+    ? submissions
+    : submissions.filter(s =>
+        activeTab === 'zonal'
+          ? (!s.submission_type || s.submission_type === 'zonal')
+          : s.submission_type === 'group'
+      );
+
+  const totals = filteredSubmissions.reduce(
     (acc, s) => ({
       overall: acc.overall + parseCopies(s.overall_target),
       print: acc.print + parseCopies(s.print_target),
@@ -357,6 +375,35 @@ export default function AdminPage() {
           margin-bottom: 20px;
           flex-wrap: wrap;
           gap: 15px;
+        }
+
+        .tabs-container {
+          display: flex;
+          gap: 8px;
+          margin-bottom: 20px;
+        }
+
+        .tab-button {
+          padding: 12px 24px;
+          background-color: white;
+          color: #64748b;
+          font-weight: 600;
+          font-size: 14px;
+          border: 1px solid var(--border);
+          border-radius: 6px;
+          cursor: pointer;
+          transition: all 0.2s;
+        }
+
+        .tab-button:hover {
+          background-color: #f1f5f9;
+          color: var(--primary);
+        }
+
+        .tab-button.active {
+          background-color: var(--primary);
+          color: white;
+          border-color: var(--primary);
         }
 
         .search-box {
@@ -635,6 +682,17 @@ export default function AdminPage() {
             padding: 20px 10px;
           }
 
+          .tabs-container {
+            flex-wrap: wrap;
+          }
+
+          .tab-button {
+            flex: 1;
+            min-width: 120px;
+            padding: 10px 16px;
+            font-size: 13px;
+          }
+
           .controls-bar {
             flex-direction: column;
             align-items: stretch;
@@ -712,6 +770,27 @@ export default function AdminPage() {
               <div className="stat-value">{totals.groups.toLocaleString()}</div>
               <div className="stat-sub">Groups across all zones</div>
             </div>
+          </div>
+
+          <div className="tabs-container">
+            <button
+              className={`tab-button ${activeTab === 'all' ? 'active' : ''}`}
+              onClick={() => setActiveTab('all')}
+            >
+              All Submissions ({submissions.length})
+            </button>
+            <button
+              className={`tab-button ${activeTab === 'zonal' ? 'active' : ''}`}
+              onClick={() => setActiveTab('zonal')}
+            >
+              Zonal Pastors ({submissions.filter(s => !s.submission_type || s.submission_type === 'zonal').length})
+            </button>
+            <button
+              className={`tab-button ${activeTab === 'group' ? 'active' : ''}`}
+              onClick={() => setActiveTab('group')}
+            >
+              Group Pastors ({submissions.filter(s => s.submission_type === 'group').length})
+            </button>
           </div>
 
           <div className="controls-bar">

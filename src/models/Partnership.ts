@@ -1,10 +1,13 @@
 import mongoose, { Schema, models } from 'mongoose';
 
+export type SubmissionType = 'zonal' | 'group';
+
 export interface IPartnership {
   fullname: string;
   zone?: string;
   num_groups?: string;
   group?: string;
+  submission_type?: SubmissionType;
   overall_target: string;
   print_target: string;
   digital_target: string;
@@ -31,6 +34,11 @@ const PartnershipSchema = new Schema<IPartnership>(
     group: {
       type: String,
       trim: true,
+    },
+    submission_type: {
+      type: String,
+      enum: ['zonal', 'group'],
+      default: 'zonal',
     },
     overall_target: {
       type: String,

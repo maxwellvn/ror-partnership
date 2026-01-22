@@ -33,6 +33,7 @@ export async function POST(request: NextRequest) {
       print_target,
       digital_target,
       campaigns,
+      submission_type,
     } = body;
 
     // Validate required fields
@@ -48,6 +49,7 @@ export async function POST(request: NextRequest) {
       zone: zoneOther || zone || '',
       num_groups: num_groups || '0',
       group: groupOther || group || '',
+      submission_type: submission_type || 'zonal',
       overall_target: overall_target || '0',
       print_target: print_target || '0',
       digital_target: digital_target || '0',

@@ -153,7 +153,7 @@ export default function GroupPastorsPage() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({ ...formData, submission_type: 'group' }),
       });
 
       const result = await response.json();
