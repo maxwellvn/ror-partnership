@@ -255,7 +255,7 @@ export default function Home() {
             <form onSubmit={handleSubmit}>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="fullname">Pastor Name <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="fullname">Name of Pastor <span style={{color: '#dc2626'}}>*</span></label>
                 <input
                   className={styles.input}
                   type="text"
