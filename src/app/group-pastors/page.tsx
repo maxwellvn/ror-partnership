@@ -34,7 +34,6 @@ export default function GroupPastorsPage() {
     fullname: '',
     zone: '',
     zoneOther: '',
-    num_groups: '',
     group: '',
     overall_target: '',
     print_target: '',
@@ -164,7 +163,6 @@ export default function GroupPastorsPage() {
           fullname: '',
           zone: '',
           zoneOther: '',
-          num_groups: '',
           group: '',
           overall_target: '',
           print_target: '',
@@ -293,22 +291,6 @@ export default function GroupPastorsPage() {
                   />
                 </div>
               )}
-
-              {/* Number of Groups */}
-              <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="num_groups">Number of Groups in Your Zone <span>*</span></label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  id="num_groups"
-                  name="num_groups"
-                  placeholder="0"
-                  value={formData.num_groups}
-                  onChange={handleNumberChange}
-                  onBlur={handleNumberBlur}
-                  required
-                />
-              </div>
 
               {/* Group Name */}
               <div className={styles.inputGroup}>
