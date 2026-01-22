@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { Inter, Playfair_Display } from 'next/font/google';
-import styles from '../page/page.module.css';
+import styles from '@/app/page.module.css';
 
 const inter = Inter({
   subsets: ['latin'],
