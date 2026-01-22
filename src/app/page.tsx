@@ -306,17 +306,16 @@ export default function Home() {
               )}
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="group">Group <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="group">Group</label>
                 <select
                   className={styles.input}
                   id="group"
                   name="group"
                   value={formData.group}
                   onChange={handleInputChange}
-                  required={(!showGroupOther && !showZoneOther)}
                   disabled={!formData.zone && !showZoneOther}
                 >
-                  <option value="">{(!formData.zone && !showZoneOther) ? 'Select a zone first' : 'Select your group'}</option>
+                  <option value="">{(!formData.zone && !showZoneOther) ? 'Select a zone first' : 'Select your group (optional)'}</option>
                   {!showZoneOther && zones.find(z => z.name === formData.zone)?.groups?.map((group, index) => (
                     <option key={group.id || index} value={group.name}>
                       {group.name}
@@ -328,7 +327,7 @@ export default function Home() {
 
               {showGroupOther && (
                 <div className={styles.inputGroup}>
-                  <label className={styles.label} htmlFor="groupOther">Specify Group <span style={{color: '#dc2626'}}>*</span></label>
+                  <label className={styles.label} htmlFor="groupOther">Specify Group</label>
                   <input
                     className={styles.input}
                     type="text"
@@ -337,7 +336,6 @@ export default function Home() {
                     placeholder="Enter your group name"
                     value={formData.groupOther}
                     onChange={handleInputChange}
-                    required={showGroupOther}
                   />
                 </div>
               )}
