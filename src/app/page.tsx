@@ -325,7 +325,7 @@ export default function Home() {
                       {group.name}
                     </option>
                   ))}
-                  {formData.zone && zones.find(z => z.name === formData.zone)?.groups && zones.find(z => z.name === formData.zone)?.groups.length > 0 && (
+                  {formData.zone && zones.find(z => z.name === formData.zone)?.groups && zones.find(z => z.name === formData.zone)!.groups!.length > 0 && (
                     <option value="OTHER">Other (Specify below)</option>
                   )}
                 </select>
