@@ -39,7 +39,10 @@ export default function Home() {
     overall_target: '',
     print_target: '',
     digital_target: '',
-    campaigns_sponsorship: '',
+    wonder_sponsorship: '',
+    project_sponsorship: '',
+    crusade_sponsorship: '',
+    other_campaigns: '',
   });
 
   const [showZoneOther, setShowZoneOther] = useState(false);
@@ -173,7 +176,10 @@ export default function Home() {
           overall_target: '',
           print_target: '',
           digital_target: '',
-          campaigns_sponsorship: '',
+          wonder_sponsorship: '',
+          project_sponsorship: '',
+          crusade_sponsorship: '',
+          other_campaigns: '',
         });
         setShowZoneOther(false);
         setShowGroupOther(false);
@@ -385,15 +391,60 @@ export default function Home() {
                 />
               </div>
 
-              <div className={styles.formSectionTitle}>3. Sponsorship of campaigns and crusades</div>
+              {/* Section 3: Campaign Breakdown */}
+              <div className={styles.formSectionTitle}>Campaigns & Sponsorships</div>
+
               <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="wonder_sponsorship">Wonder Copies Sponsorship <span style={{color: '#dc2626'}}>*</span></label>
                 <input
                   className={styles.input}
                   type="text"
-                  id="campaigns_sponsorship"
-                  name="campaigns_sponsorship"
+                  id="wonder_sponsorship"
+                  name="wonder_sponsorship"
                   placeholder="Enter amount"
-                  value={formData.campaigns_sponsorship}
+                  value={formData.wonder_sponsorship}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="project_sponsorship">Project Sponsorship <span style={{color: '#dc2626'}}>*</span></label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  id="project_sponsorship"
+                  name="project_sponsorship"
+                  placeholder="Enter amount"
+                  value={formData.project_sponsorship}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="crusade_sponsorship">Crusade Sponsorship <span style={{color: '#dc2626'}}>*</span></label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  id="crusade_sponsorship"
+                  name="crusade_sponsorship"
+                  placeholder="Enter amount"
+                  value={formData.crusade_sponsorship}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
+
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="other_campaigns">Other Campaigns <span style={{color: '#dc2626'}}>*</span></label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  id="other_campaigns"
+                  name="other_campaigns"
+                  placeholder="Enter amount"
+                  value={formData.other_campaigns}
                   onChange={handleInputChange}
                   required
                 />
