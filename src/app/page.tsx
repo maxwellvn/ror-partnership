@@ -244,7 +244,7 @@ export default function Home() {
         <div className={styles.formSide}>
           <div className={styles.formContainer}>
             <div className={styles.formHeader}>
-              <h2>𝐘𝐎𝐔𝐑 𝟐𝟎𝟐𝟔 PARTNERSHIP 𝐏𝐋𝐀𝐍𝐒 𝐅𝐎𝐑 𝐓𝐇𝐄 𝐆𝐑𝐎𝐔𝐏</h2>
+              <h2>𝐘𝐎𝐔𝐑 𝟐𝟎𝟐𝟔 PARTNERSHIP 𝐏𝐋𝐀𝐍𝐒 𝐅𝐎𝐑 𝐘𝐎𝐔𝐑 𝐆𝐑𝐎𝐔𝐏</h2>
             </div>
 
             {submitMessage && (
@@ -317,14 +317,14 @@ export default function Home() {
                   disabled={zonesLoading || !formData.zone}
                 >
                   <option value="">
-                    {!formData.zone ? 'Select a zone first' : zonesLoading ? 'Loading groups...' : 'Select your group'}
+                    {!formData.zone ? 'Select a zone first' : zonesLoading ? 'Loading groups...' : 'Select your group (optional)'}
                   </option>
                   {zones.find(z => z.name === formData.zone)?.groups?.map((group) => (
                     <option key={group.id} value={group.name}>
                       {group.name}
                     </option>
                   ))}
-                  {formData.zone && zones.find(z => z.name === formData.zone)?.groups && zones.find(z => z.name === formData.zone)!.groups!.length > 0 && (
+                  {formData.zone && (
                     <option value="OTHER">Other (Specify below)</option>
                   )}
                 </select>
@@ -338,7 +338,7 @@ export default function Home() {
                     type="text"
                     id="groupOther"
                     name="groupOther"
-                    placeholder="Enter your group name"
+                    placeholder="Enter your group's faith goal"
                     value={formData.groupOther}
                     onChange={handleInputChange}
                   />
