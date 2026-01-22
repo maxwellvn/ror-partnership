@@ -338,7 +338,7 @@ export default function Home() {
                     type="text"
                     id="groupOther"
                     name="groupOther"
-                    placeholder="Enter your group's faith goal"
+                    placeholder="Enter your group name"
                     value={formData.groupOther}
                     onChange={handleInputChange}
                   />
