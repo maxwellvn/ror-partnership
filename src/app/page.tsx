@@ -21,6 +21,7 @@ const playfair = Playfair_Display({
 interface Zone {
   name: string;
   id?: string;
+  groups?: { name: string; id: string }[];
 }
 
 export default function Home() {
@@ -32,13 +33,11 @@ export default function Home() {
   const [formData, setFormData] = useState({
     fullname: '',
     zone: '',
+    group: '',
     overall_target: '',
     print_target: '',
     digital_target: '',
-    wonder_sponsorship: '',
-    project_sponsorship: '',
-    crusade_sponsorship: '',
-    other_campaigns: '',
+    campaigns_sponsorship: '',
   });
 
   // Fetch zones from API
@@ -58,9 +57,9 @@ export default function Home() {
               // Each region contains zones as keys
               Object.values(region).forEach((zone: any) => {
                 if (zone && typeof zone === 'object' && zone.name) {
-                  zonesList.push({ name: zone.name, id: zone.name });
+                  zonesList.push({ name: zone.name, id: zone.name, groups: zone.groups || [] });
                 } else if (typeof zone === 'string') {
-                  zonesList.push({ name: zone, id: zone });
+                  zonesList.push({ name: zone, id: zone, groups: [] });
                 }
               });
             }
@@ -139,13 +138,11 @@ export default function Home() {
         setFormData({
           fullname: '',
           zone: '',
+          group: '',
           overall_target: '',
           print_target: '',
           digital_target: '',
-          wonder_sponsorship: '',
-          project_sponsorship: '',
-          crusade_sponsorship: '',
-          other_campaigns: '',
+          campaigns_sponsorship: '',
         });
       } else {
         setSubmitMessage({ type: 'error', text: result.error || 'Something went wrong. Please try again.' });
@@ -188,8 +185,7 @@ export default function Home() {
             <div className={styles.chatUi}>
               <div className={styles.chatAvatar}>ROR</div>
               <div className={styles.chatBubble}>
-                <strong>𝐘𝐎𝐔𝐑 𝟐𝟎𝟐𝟔 PARTNERSHIP 𝐏𝐋𝐀𝐍𝐒 𝐅𝐎𝐑 𝐓𝐇𝐄 𝐙𝐎𝐍𝐄</strong><br /><br />
-                Dear Esteemed Pastor,<br /><br />
+                <strong>Dear Esteemed Pastor,</strong><br /><br />
                 Warm greetings in the precious name of our Lord Jesus Christ.<br /><br />
                 What an incredible journey we've just experienced together—three powerful days of prayer and fasting with our dear man of God, Pastor Chris. Our hearts are still ablaze with the fresh fire and vision he imparted to us!<br /><br />
                 We are deeply grateful for your unwavering commitment and generous sponsorship in bringing Rhapsody of Realities to the nations. Your partnership has been instrumental in reaching precious souls with God's Word, and we honor you for your faithfulness.<br /><br />
@@ -208,8 +204,7 @@ export default function Home() {
         <div className={styles.formSide}>
           <div className={styles.formContainer}>
             <div className={styles.formHeader}>
-              <h2>Rhapsody Partnership Target</h2>
-              <p>Please complete your details and partnership breakdown below.</p>
+              <h2>𝐘𝐎𝐔𝐑 𝟐𝟎𝟐𝟔 PARTNERSHIP 𝐏𝐋𝐀𝐍𝐒 𝐅𝐎𝐑 𝐓𝐇𝐄 𝐙𝐎𝐍𝐄</h2>
             </div>
 
             {submitMessage && (
@@ -221,13 +216,13 @@ export default function Home() {
             <form onSubmit={handleSubmit}>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="fullname">Zonal Pastor <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="fullname">Pastor Name <span style={{color: '#dc2626'}}>*</span></label>
                 <input
                   className={styles.input}
                   type="text"
                   id="fullname"
                   name="fullname"
-                  placeholder="Enter Zonal Pastor's name"
+                  placeholder="Enter Pastor's name"
                   value={formData.fullname}
                   onChange={handleInputChange}
                   required
@@ -254,11 +249,28 @@ export default function Home() {
                 </select>
               </div>
 
-              {/* Section 2: Main Targets */}
-              <div className={styles.formSectionTitle}>Target Overview</div>
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="group">Group <span style={{color: '#dc2626'}}>*</span></label>
+                <select
+                  className={styles.input}
+                  id="group"
+                  name="group"
+                  value={formData.group}
+                  onChange={handleInputChange}
+                  required
+                  disabled={!formData.zone}
+                >
+                  <option value="">{!formData.zone ? 'Select a zone first' : 'Select your group'}</option>
+                  {zones.find(z => z.name === formData.zone)?.groups?.map((group, index) => (
+                    <option key={group.id || index} value={group.name}>
+                      {group.name}
+                    </option>
+                  ))}
+                </select>
+              </div>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="overall_target">Overall Target Goal (Copies) <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="overall_target">Faith Goal - Total number of copies <span style={{color: '#dc2626'}}>*</span></label>
                 <div className={styles.inputWrap}>
                   <input
                     className={styles.input}
@@ -274,95 +286,47 @@ export default function Home() {
                 </div>
               </div>
 
-              <div className={styles.row2}>
-                <div className={styles.inputGroup}>
-                  <label className={styles.label} htmlFor="print_target">Print Copies <span style={{color: '#dc2626'}}>*</span></label>
-                  <div className={styles.inputWrap}>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      id="print_target"
-                      name="print_target"
-                      placeholder="0"
-                      value={formData.print_target}
-                      onChange={handleNumberChange}
-                      onBlur={handleNumberBlur}
-                      required
-                    />
-                  </div>
-                </div>
-                <div className={styles.inputGroup}>
-                  <label className={styles.label} htmlFor="digital_target">Digital Copies <span style={{color: '#dc2626'}}>*</span></label>
-                  <div className={styles.inputWrap}>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      id="digital_target"
-                      name="digital_target"
-                      placeholder="0"
-                      value={formData.digital_target}
-                      onChange={handleNumberChange}
-                      onBlur={handleNumberBlur}
-                      required
-                    />
-                  </div>
-                </div>
-              </div>
+              <p style={{ marginBottom: '15px' }}>Please kindly break the above into the sections below:</p>
 
-              {/* Section 3: Campaign Breakdown */}
-              <div className={styles.formSectionTitle}>Campaigns & Sponsorships</div>
-
+              <div className={styles.formSectionTitle}>1. Print copies</div>
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="wonder_sponsorship">Wonder Copies Sponsorship <span style={{color: '#dc2626'}}>*</span></label>
                 <input
                   className={styles.input}
                   type="text"
-                  id="wonder_sponsorship"
-                  name="wonder_sponsorship"
-                  placeholder="Enter amount"
-                  value={formData.wonder_sponsorship}
-                  onChange={handleInputChange}
+                  id="print_target"
+                  name="print_target"
+                  placeholder="0"
+                  value={formData.print_target}
+                  onChange={handleNumberChange}
+                  onBlur={handleNumberBlur}
                   required
                 />
               </div>
 
+              <div className={styles.formSectionTitle}>2. Digital copies</div>
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="project_sponsorship">Project Sponsorship <span style={{color: '#dc2626'}}>*</span></label>
                 <input
                   className={styles.input}
                   type="text"
-                  id="project_sponsorship"
-                  name="project_sponsorship"
-                  placeholder="Enter amount"
-                  value={formData.project_sponsorship}
-                  onChange={handleInputChange}
+                  id="digital_target"
+                  name="digital_target"
+                  placeholder="0"
+                  value={formData.digital_target}
+                  onChange={handleNumberChange}
+                  onBlur={handleNumberBlur}
                   required
                 />
               </div>
 
+              <div className={styles.formSectionTitle}>3. Sponsorship of campaigns and crusades</div>
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="crusade_sponsorship">Crusade Sponsorship <span style={{color: '#dc2626'}}>*</span></label>
                 <input
                   className={styles.input}
                   type="text"
-                  id="crusade_sponsorship"
-                  name="crusade_sponsorship"
+                  id="campaigns_sponsorship"
+                  name="campaigns_sponsorship"
                   placeholder="Enter amount"
-                  value={formData.crusade_sponsorship}
-                  onChange={handleInputChange}
-                  required
-                />
-              </div>
-
-              <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="other_campaigns">Other Campaigns <span style={{color: '#dc2626'}}>*</span></label>
-                <input
-                  className={styles.input}
-                  type="text"
-                  id="other_campaigns"
-                  name="other_campaigns"
-                  placeholder="Enter amount"
-                  value={formData.other_campaigns}
+                  value={formData.campaigns_sponsorship}
                   onChange={handleInputChange}
                   required
                 />
