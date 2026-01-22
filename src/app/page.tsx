@@ -414,10 +414,10 @@ export default function Home() {
               </div>
 
               {/* Section 3: Campaign Breakdown */}
-              <div className={styles.formSectionTitle}>Campaigns & Sponsorships</div>
+              <div className={styles.formSectionTitle}>Campaigns & Sponsorships (Optional)</div>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="wonder_sponsorship">Wonder Copies Sponsorship <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="wonder_sponsorship">Wonder Copies Sponsorship</label>
                 <input
                   className={styles.input}
                   type="text"
@@ -426,12 +426,11 @@ export default function Home() {
                   placeholder="Enter amount"
                   value={formData.wonder_sponsorship}
                   onChange={handleInputChange}
-                  required
                 />
               </div>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="project_sponsorship">Project Sponsorship <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="project_sponsorship">Project Sponsorship</label>
                 <input
                   className={styles.input}
                   type="text"
@@ -440,12 +439,11 @@ export default function Home() {
                   placeholder="Enter amount"
                   value={formData.project_sponsorship}
                   onChange={handleInputChange}
-                  required
                 />
               </div>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="crusade_sponsorship">Crusade Sponsorship <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="crusade_sponsorship">Crusade Sponsorship</label>
                 <input
                   className={styles.input}
                   type="text"
@@ -454,12 +452,11 @@ export default function Home() {
                   placeholder="Enter amount"
                   value={formData.crusade_sponsorship}
                   onChange={handleInputChange}
-                  required
                 />
               </div>
 
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="other_campaigns">Other Campaigns <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="other_campaigns">Other Campaigns</label>
                 <input
                   className={styles.input}
                   type="text"
@@ -468,7 +465,6 @@ export default function Home() {
                   placeholder="Enter amount"
                   value={formData.other_campaigns}
                   onChange={handleInputChange}
-                  required
                 />
               </div>
 
