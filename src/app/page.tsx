@@ -33,12 +33,17 @@ export default function Home() {
   const [formData, setFormData] = useState({
     fullname: '',
     zone: '',
+    zoneOther: '',
     group: '',
+    groupOther: '',
     overall_target: '',
     print_target: '',
     digital_target: '',
     campaigns_sponsorship: '',
   });
+
+  const [showZoneOther, setShowZoneOther] = useState(false);
+  const [showGroupOther, setShowGroupOther] = useState(false);
 
   // Fetch zones from API
   useEffect(() => {
@@ -82,6 +87,30 @@ export default function Home() {
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
+
+    // Handle "Other" selection for zone
+    if (name === 'zone') {
+      if (value === 'OTHER') {
+        setShowZoneOther(true);
+        setFormData((prev) => ({ ...prev, zone: '', zoneOther: '', group: '', groupOther: '' }));
+        setShowGroupOther(false);
+      } else {
+        setShowZoneOther(false);
+        setFormData((prev) => ({ ...prev, zoneOther: '', group: '', groupOther: '' }));
+        setShowGroupOther(false);
+      }
+    }
+
+    // Handle "Other" selection for group
+    if (name === 'group') {
+      if (value === 'OTHER') {
+        setShowGroupOther(true);
+        setFormData((prev) => ({ ...prev, group: '', groupOther: '' }));
+      } else {
+        setShowGroupOther(false);
+        setFormData((prev) => ({ ...prev, groupOther: '' }));
+      }
+    }
   };
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -138,12 +167,16 @@ export default function Home() {
         setFormData({
           fullname: '',
           zone: '',
+          zoneOther: '',
           group: '',
+          groupOther: '',
           overall_target: '',
           print_target: '',
           digital_target: '',
           campaigns_sponsorship: '',
         });
+        setShowZoneOther(false);
+        setShowGroupOther(false);
       } else {
         setSubmitMessage({ type: 'error', text: result.error || 'Something went wrong. Please try again.' });
       }
@@ -237,7 +270,7 @@ export default function Home() {
                   name="zone"
                   value={formData.zone}
                   onChange={handleInputChange}
-                  required
+                  required={(!showZoneOther)}
                   disabled={zonesLoading}
                 >
                   <option value="">{zonesLoading ? 'Loading zones...' : 'Select your zone'}</option>
@@ -246,8 +279,25 @@ export default function Home() {
                       {zone.name}
                     </option>
                   ))}
+                  <option value="OTHER">Other (Specify below)</option>
                 </select>
               </div>
+
+              {showZoneOther && (
+                <div className={styles.inputGroup}>
+                  <label className={styles.label} htmlFor="zoneOther">Specify Zone <span style={{color: '#dc2626'}}>*</span></label>
+                  <input
+                    className={styles.input}
+                    type="text"
+                    id="zoneOther"
+                    name="zoneOther"
+                    placeholder="Enter your zone name"
+                    value={formData.zoneOther}
+                    onChange={handleInputChange}
+                    required={showZoneOther}
+                  />
+                </div>
+              )}
 
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="group">Group <span style={{color: '#dc2626'}}>*</span></label>
@@ -257,17 +307,34 @@ export default function Home() {
                   name="group"
                   value={formData.group}
                   onChange={handleInputChange}
-                  required
-                  disabled={!formData.zone}
+                  required={(!showGroupOther && !showZoneOther)}
+                  disabled={!formData.zone && !showZoneOther}
                 >
-                  <option value="">{!formData.zone ? 'Select a zone first' : 'Select your group'}</option>
-                  {zones.find(z => z.name === formData.zone)?.groups?.map((group, index) => (
+                  <option value="">{(!formData.zone && !showZoneOther) ? 'Select a zone first' : 'Select your group'}</option>
+                  {!showZoneOther && zones.find(z => z.name === formData.zone)?.groups?.map((group, index) => (
                     <option key={group.id || index} value={group.name}>
                       {group.name}
                     </option>
                   ))}
+                  {!showZoneOther && <option value="OTHER">Other (Specify below)</option>}
                 </select>
               </div>
+
+              {showGroupOther && (
+                <div className={styles.inputGroup}>
+                  <label className={styles.label} htmlFor="groupOther">Specify Group <span style={{color: '#dc2626'}}>*</span></label>
+                  <input
+                    className={styles.input}
+                    type="text"
+                    id="groupOther"
+                    name="groupOther"
+                    placeholder="Enter your group name"
+                    value={formData.groupOther}
+                    onChange={handleInputChange}
+                    required={showGroupOther}
+                  />
+                </div>
+              )}
 
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="overall_target">Faith Goal - Total number of copies <span style={{color: '#dc2626'}}>*</span></label>
