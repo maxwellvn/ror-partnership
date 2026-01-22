@@ -1,4 +1,4 @@
-import mongoose, { Schema, Models } from 'mongoose';
+import mongoose, { Schema, models } from 'mongoose';
 
 export interface IPartnership {
   fullname: string;
@@ -49,6 +49,6 @@ const PartnershipSchema = new Schema<IPartnership>(
   }
 );
 
-const Partnership = (models.Partnership as mongoose.Model<IPartnership>) || mongoose.model<IPartnership>('Partnership', PartnershipSchema);
+const Partnership = models.Partnership || mongoose.model<IPartnership>('Partnership', PartnershipSchema);
 
 export default Partnership;
