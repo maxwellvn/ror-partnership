@@ -211,9 +211,6 @@ export default function Home() {
 
             <form onSubmit={handleSubmit}>
 
-              {/* Section 1: Personal Information */}
-              <div className={styles.formSectionTitle}>Personal Information</div>
-
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="fullname">Zonal Pastor <span style={{color: '#dc2626'}}>*</span></label>
                 <input
