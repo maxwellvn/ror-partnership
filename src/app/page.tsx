@@ -34,8 +34,7 @@ export default function Home() {
     fullname: '',
     zone: '',
     zoneOther: '',
-    group: '',
-    groupOther: '',
+    num_groups: '',
     overall_target: '',
     print_target: '',
     digital_target: '',
@@ -43,7 +42,6 @@ export default function Home() {
   });
 
   const [showZoneOther, setShowZoneOther] = useState(false);
-  const [showGroupOther, setShowGroupOther] = useState(false);
 
   // Fetch zones from API
   useEffect(() => {
@@ -90,38 +88,26 @@ export default function Home() {
 
     // Handle "Other" selection for zone
     if (name === 'zone') {
-      // Clear group when zone changes
-      setFormData((prev) => ({ ...prev, group: '', groupOther: '' }));
-      setShowGroupOther(false);
-
       if (value === 'OTHER') {
         setShowZoneOther(true);
-        setFormData((prev) => ({ ...prev, zone: '', zoneOther: '', group: '', groupOther: '' }));
+        setFormData((prev) => ({ ...prev, zone: '', zoneOther: '' }));
       } else {
         setShowZoneOther(false);
-        setFormData((prev) => ({ ...prev, zoneOther: '', group: '', groupOther: '' }));
+        setFormData((prev) => ({ ...prev, zoneOther: '' }));
       }
-    }
-
-    // Handle "Other" selection for group
-    if (name === 'group') {
-      if (value === 'OTHER') {
-        setShowGroupOther(true);
-        setFormData((prev) => ({ ...prev, group: '', groupOther: '' }));
-      } else {
-        setShowGroupOther(false);
-        setFormData((prev) => ({ ...prev, groupOther: '' }));
-      }
-    }
-
-    // When groupOther is typed directly, clear group selection
-    if (name === 'groupOther' && value !== '') {
-      setFormData((prev) => ({ ...prev, group: '' }));
     }
   };
 
   const handleNumberChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
+
+    // Allow only numbers for num_groups field
+    if (name === 'num_groups') {
+      const numValue = value.replace(/[^\d]/g, '');
+      setFormData((prev) => ({ ...prev, [name]: numValue }));
+      return;
+    }
+
     setFormData((prev) => ({ ...prev, [name]: value }));
 
     // Auto-calculate overall target if print and digital change
@@ -150,7 +136,9 @@ export default function Home() {
 
   const handleNumberBlur = (e: React.FocusEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: formatNumber(value) }));
+    if (name !== 'num_groups') {
+      setFormData((prev) => ({ ...prev, [name]: formatNumber(value) }));
+    }
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -175,15 +163,13 @@ export default function Home() {
           fullname: '',
           zone: '',
           zoneOther: '',
-          group: '',
-          groupOther: '',
+          num_groups: '',
           overall_target: '',
           print_target: '',
           digital_target: '',
           campaigns: '',
         });
         setShowZoneOther(false);
-        setShowGroupOther(false);
       } else {
         setSubmitMessage({ type: 'error', text: result.error || 'Something went wrong. Please try again.' });
       }
@@ -196,56 +182,54 @@ export default function Home() {
 
   return (
     <div className={`${inter.variable} ${playfair.variable}`}>
-      <div className={styles.pageGrid}>
+      <div className={styles.pageWrapper}>
 
-        {/* LEFT COLUMN: Content */}
-        <div className={styles.contentSide}>
-          <div className={styles.contentWrapper}>
-            <img src="/logo.webp" alt="Rhapsody of Realities" className={styles.logo} />
-            <div className={styles.eyebrow}>Partnership 2026</div>
+        <div className={styles.document}>
+
+          {/* Header */}
+          <header className={styles.header}>
+            <div className={styles.logoContainer}>
+              <img src="/logo.webp" alt="Rhapsody of Realities" className={styles.logo} />
+            </div>
             <h1 className={styles.title}>The Race For The Last Man</h1>
 
-            {/* Scripture */}
-            <div className={styles.scriptureBlock}>
+            <div className={styles.scriptureBox}>
               <div className={styles.scriptureText}>
                 "And God is able to make all grace abound toward you; that ye, always having all sufficiency in all things, may abound to every good work."
               </div>
-              <div className={styles.scriptureRef}>2 Corinthians 9:8</div>
+              <span className={styles.scriptureRef}>2 Corinthians 9:8</span>
             </div>
+          </header>
 
-            {/* Pastor's Quote */}
-            <div className={styles.quoteSection}>
-              <p className={styles.quoteText}>
-                "We must realize that the Rhapsody of Realities is not just a book; it is a life-giving spirit. When we give towards its distribution, we are not just donating; we are partnering with heaven to alter the destiny of nations."
-              </p>
-              <span className={styles.quoteAuthor}>Rev. Chris Oyakhilome D.Sc., D.D.</span>
-            </div>
+          {/* Letter Body */}
+          <section className={styles.letterContent}>
+            <span className={styles.salutation}>Dear Esteemed Pastor,</span>
 
-            {/* Chat UI */}
-            <div className={styles.chatUi}>
-              <div className={styles.chatAvatar}><img src="/logo.webp" alt="ROR" style={{width: '100%', height: '100%', objectFit: 'contain'}} /></div>
-              <div className={styles.chatBubble}>
-                <strong>Dear Esteemed Pastor,</strong><br /><br />
-                Warm greetings in the precious name of our Lord Jesus Christ.<br /><br />
-                What an incredible journey we've just experienced together—three powerful days of prayer and fasting with our dear man of God, Pastor Chris. Our hearts are still ablaze with the fresh fire and vision he imparted to us!<br /><br />
-                We are deeply grateful for your unwavering commitment and generous sponsorship in bringing Rhapsody of Realities to the nations. Your partnership has been instrumental in reaching precious souls with God's Word, and we honor you for your faithfulness.<br /><br />
-                As we step boldly into this Year of Manifestation, we carry the prophetic declaration that our capacity has increased 1000 times! The man of God has reminded us that the Lord has given us power to get wealth, and this year, we will surpass everything we've ever accomplished—1000 times over—as we race together to reach the last man with the Gospel.<br /><br />
-                We are confident that God has placed a specific vision in your heart for Rhapsody of Realities this year. Kindly share with us your overall faith goal and a breakdown for distribution (Print), digital, project sponsorship, so we can build a strategic plan together and work the miracles as we manifest the power of God through our combined efforts.<br /><br />
-                Please take a few moments to complete the form below with your ROR goals for this year of manifestation.<br /><br />
-                Thank you.<br /><br />
-                <strong>Global Partnership Department</strong><br />
-                Rhapsody of Realities.
-              </div>
-            </div>
-          </div>
-        </div>
+            <p>
+              Warm greetings in the precious name of our Lord Jesus Christ. What an incredible journey we've just experienced together—three powerful days of prayer and fasting with our dear man of God, Pastor Chris.
+            </p>
 
-        {/* RIGHT COLUMN: Form */}
-        <div className={styles.formSide}>
-          <div className={styles.formContainer}>
-            <div className={styles.formHeader}>
-              <h2>𝐘𝐎𝐔𝐑 𝟐𝟎𝟐𝟔 PARTNERSHIP 𝐏𝐋𝐀𝐍𝐒 𝐅𝐎𝐑 𝐘𝐎𝐔𝐑 𝐆𝐑𝐎𝐔𝐏</h2>
+            <p>
+              We are deeply grateful for your unwavering commitment and generous sponsorship in bringing Rhapsody of Realities to the nations. Your partnership has been instrumental in reaching precious souls with God's Word, and we honor you for your faithfulness.
+            </p>
+
+            <p>
+              As we step boldly into this Year of Manifestation, we carry the prophetic declaration that our capacity has increased 1000 times! The man of God has reminded us that the Lord has given us power to get wealth, and this year, we will surpass everything we've ever accomplished—1000 times over—as we race together to reach the last man with the Gospel.
+            </p>
+
+            <p>
+              We are confident that God has placed a specific vision in your heart for Rhapsody of Realities this year. Kindly share with us your overall faith goal and a breakdown for distribution (Print), digital, and project sponsorship, so we can build a strategic plan together and work the miracles as we manifest the power of God through our combined efforts.
+            </p>
+
+            <div className={styles.signatureBlock}>
+              Global Partnership Department<br />
+              Rhapsody of Realities
             </div>
+          </section>
+
+          {/* Form Section */}
+          <section className={styles.formArea}>
+            <div className={styles.formHeading}>2026 Partnership Commitment</div>
 
             {submitMessage && (
               <div className={submitMessage.type === 'success' ? styles.alertSuccess : styles.alertError}>
@@ -255,44 +239,62 @@ export default function Home() {
 
             <form onSubmit={handleSubmit}>
 
+              {/* Name */}
               <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="fullname">Name of Pastor <span style={{color: '#dc2626'}}>*</span></label>
+                <label className={styles.label} htmlFor="fullname">Name of Pastor <span>*</span></label>
                 <input
                   className={styles.input}
                   type="text"
                   id="fullname"
                   name="fullname"
-                  placeholder="Enter Pastor's name"
+                  placeholder="Enter Full Name"
                   value={formData.fullname}
                   onChange={handleInputChange}
                   required
                 />
               </div>
 
-              <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="zone">Zone <span style={{color: '#dc2626'}}>*</span></label>
-                <select
-                  className={styles.input}
-                  id="zone"
-                  name="zone"
-                  value={formData.zone}
-                  onChange={handleInputChange}
-                  required={(!showZoneOther)}
-                  disabled={zonesLoading}
-                >
-                  <option value="">{zonesLoading ? 'Loading zones...' : 'Select your zone'}</option>
-                  {zones.map((zone, index) => (
-                    <option key={zone.id || index} value={zone.name}>
-                      {zone.name}
-                    </option>
-                  ))}
-                  <option value="OTHER">Other (Specify below)</option>
-                </select>
+              {/* Zone and Number of Groups */}
+              <div className={styles.row}>
+                <div className={styles.col + ' ' + styles.inputGroup}>
+                  <label className={styles.label} htmlFor="zone">Zone <span>*</span></label>
+                  <select
+                    className={styles.select}
+                    id="zone"
+                    name="zone"
+                    value={formData.zone}
+                    onChange={handleInputChange}
+                    required={!showZoneOther}
+                    disabled={zonesLoading}
+                  >
+                    <option value="">{zonesLoading ? 'Loading zones...' : 'Select Zone...'}</option>
+                    {zones.map((zone, index) => (
+                      <option key={zone.id || index} value={zone.name}>
+                        {zone.name}
+                      </option>
+                    ))}
+                    <option value="OTHER">Other (Specify below)</option>
+                  </select>
+                </div>
+
+                <div className={styles.col + ' ' + styles.inputGroup}>
+                  <label className={styles.label} htmlFor="num_groups">Number of Groups in Zone</label>
+                  <input
+                    className={styles.input}
+                    type="text"
+                    id="num_groups"
+                    name="num_groups"
+                    placeholder="0"
+                    value={formData.num_groups}
+                    onChange={handleNumberChange}
+                    onBlur={handleNumberBlur}
+                  />
+                </div>
               </div>
 
               {showZoneOther && (
                 <div className={styles.inputGroup}>
-                  <label className={styles.label} htmlFor="zoneOther">Specify Zone <span style={{color: '#dc2626'}}>*</span></label>
+                  <label className={styles.label} htmlFor="zoneOther">Specify Zone <span>*</span></label>
                   <input
                     className={styles.input}
                     type="text"
@@ -306,115 +308,81 @@ export default function Home() {
                 </div>
               )}
 
-              <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="group">Group</label>
-                <select
-                  className={styles.input}
-                  id="group"
-                  name="group"
-                  value={formData.group}
-                  onChange={handleInputChange}
-                  disabled={zonesLoading || !formData.zone}
-                >
-                  <option value="">
-                    {!formData.zone ? 'Select a zone first' : zonesLoading ? 'Loading groups...' : 'Select your group (optional)'}
-                  </option>
-                  {zones.find(z => z.name === formData.zone)?.groups?.map((group) => (
-                    <option key={group.id} value={group.name}>
-                      {group.name}
-                    </option>
-                  ))}
-                  {formData.zone && (
-                    <option value="OTHER">Other (Specify below)</option>
-                  )}
-                </select>
-              </div>
-
-              {showGroupOther && (
+              {/* Goal & Breakdown Container */}
+              <div className={styles.goalSection}>
                 <div className={styles.inputGroup}>
-                  <label className={styles.label} htmlFor="groupOther">Specify Group</label>
-                  <input
-                    className={styles.input}
-                    type="text"
-                    id="groupOther"
-                    name="groupOther"
-                    placeholder="Enter your group name"
-                    value={formData.groupOther}
-                    onChange={handleInputChange}
-                  />
-                </div>
-              )}
-
-              <div className={styles.inputGroup}>
-                <label className={styles.label} htmlFor="overall_target">Faith Goal - Total number of copies <span style={{color: '#dc2626'}}>*</span></label>
-                <div className={styles.inputWrap}>
+                  <label className={styles.label} htmlFor="overall_target">Faith Goal - Total Number of Copies <span>*</span></label>
                   <input
                     className={styles.input}
                     type="text"
                     id="overall_target"
                     name="overall_target"
-                    placeholder="0"
+                    placeholder="Enter Total Amount"
                     value={formData.overall_target}
                     onChange={handleInputChange}
                     onBlur={handleNumberBlur}
                     required
+                    style={{ borderColor: 'var(--navy)', fontWeight: 500 }}
+                  />
+                </div>
+
+                <div className={styles.sectionSeparator}>
+                  <span>Please kindly break the above into the sections below</span>
+                </div>
+
+                <div className={styles.row}>
+                  <div className={styles.col + ' ' + styles.inputGroup}>
+                    <label className={styles.label} htmlFor="print_target">1. Print Copies</label>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      id="print_target"
+                      name="print_target"
+                      placeholder="0"
+                      value={formData.print_target}
+                      onChange={handleNumberChange}
+                      onBlur={handleNumberBlur}
+                      required
+                    />
+                  </div>
+
+                  <div className={styles.col + ' ' + styles.inputGroup}>
+                    <label className={styles.label} htmlFor="digital_target">2. Digital Copies</label>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      id="digital_target"
+                      name="digital_target"
+                      placeholder="0"
+                      value={formData.digital_target}
+                      onChange={handleNumberChange}
+                      onBlur={handleNumberBlur}
+                      required
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.inputGroup} style={{ marginBottom: 0 }}>
+                  <label className={styles.label} htmlFor="campaigns">3. Campaigns (Wonder, Crusades)</label>
+                  <input
+                    className={styles.input}
+                    type="text"
+                    id="campaigns"
+                    name="campaigns"
+                    placeholder="0"
+                    value={formData.campaigns}
+                    onChange={handleInputChange}
                   />
                 </div>
               </div>
 
-              <p style={{ marginBottom: '15px' }}>Please kindly break the above into the sections below:</p>
-
-              <div className={styles.formSectionTitle}>1. Print copies</div>
-              <div className={styles.inputGroup}>
-                <input
-                  className={styles.input}
-                  type="text"
-                  id="print_target"
-                  name="print_target"
-                  placeholder="0"
-                  value={formData.print_target}
-                  onChange={handleNumberChange}
-                  onBlur={handleNumberBlur}
-                  required
-                />
-              </div>
-
-              <div className={styles.formSectionTitle}>2. Digital copies</div>
-              <div className={styles.inputGroup}>
-                <input
-                  className={styles.input}
-                  type="text"
-                  id="digital_target"
-                  name="digital_target"
-                  placeholder="0"
-                  value={formData.digital_target}
-                  onChange={handleNumberChange}
-                  onBlur={handleNumberBlur}
-                  required
-                />
-              </div>
-
-              {/* Section 3: Campaign Breakdown */}
-              <div className={styles.formSectionTitle}>Campaigns (to include wonder, campaigns, crusades)</div>
-
-              <div className={styles.inputGroup}>
-                <input
-                  className={styles.input}
-                  type="text"
-                  id="campaigns"
-                  name="campaigns"
-                  placeholder="Enter amount"
-                  value={formData.campaigns}
-                  onChange={handleInputChange}
-                />
-              </div>
-
-              <button type="submit" className={styles.btnSubmit} disabled={isSubmitting}>
+              <button type="submit" className={styles.submitBtn} disabled={isSubmitting}>
                 {isSubmitting ? 'Submitting...' : 'Submit Partnership'}
               </button>
 
             </form>
-          </div>
+          </section>
+
         </div>
 
       </div>

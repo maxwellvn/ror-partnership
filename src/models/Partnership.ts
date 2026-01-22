@@ -1,15 +1,13 @@
-import mongoose, { Schema, models } from 'mongoose';
+import mongoose, { Schema, Models } from 'mongoose';
 
 export interface IPartnership {
   fullname: string;
   zone?: string;
+  num_groups?: string;
   overall_target: string;
   print_target: string;
   digital_target: string;
-  wonder_sponsorship?: string;
-  project_sponsorship?: string;
-  crusade_sponsorship?: string;
-  other_campaigns?: string;
+  campaigns?: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -25,6 +23,10 @@ const PartnershipSchema = new Schema<IPartnership>(
       type: String,
       trim: true,
     },
+    num_groups: {
+      type: String,
+      default: '0',
+    },
     overall_target: {
       type: String,
       default: '0',
@@ -37,16 +39,7 @@ const PartnershipSchema = new Schema<IPartnership>(
       type: String,
       default: '0',
     },
-    wonder_sponsorship: {
-      type: String,
-    },
-    project_sponsorship: {
-      type: String,
-    },
-    crusade_sponsorship: {
-      type: String,
-    },
-    other_campaigns: {
+    campaigns: {
       type: String,
       trim: true,
     },
@@ -56,6 +49,6 @@ const PartnershipSchema = new Schema<IPartnership>(
   }
 );
 
-const Partnership = models.Partnership || mongoose.model<IPartnership>('Partnership', PartnershipSchema);
+const Partnership = (models.Partnership as mongoose.Model<IPartnership>) || mongoose.model<IPartnership>('Partnership', PartnershipSchema);
 
 export default Partnership;

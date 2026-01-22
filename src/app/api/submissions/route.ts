@@ -25,13 +25,12 @@ export async function POST(request: NextRequest) {
     const {
       fullname,
       zone,
+      zoneOther,
+      num_groups,
       overall_target,
       print_target,
       digital_target,
-      wonder_sponsorship,
-      project_sponsorship,
-      crusade_sponsorship,
-      other_campaigns,
+      campaigns,
     } = body;
 
     // Validate required fields
@@ -44,14 +43,12 @@ export async function POST(request: NextRequest) {
 
     const partnership = await Partnership.create({
       fullname,
-      zone: zone || '',
+      zone: zoneOther || zone || '',
+      num_groups: num_groups || '0',
       overall_target: overall_target || '0',
       print_target: print_target || '0',
       digital_target: digital_target || '0',
-      wonder_sponsorship: wonder_sponsorship || '',
-      project_sponsorship: project_sponsorship || '',
-      crusade_sponsorship: crusade_sponsorship || '',
-      other_campaigns: other_campaigns || '',
+      campaigns: campaigns || '',
     });
 
     return NextResponse.json({ success: true, data: partnership }, { status: 201 });
