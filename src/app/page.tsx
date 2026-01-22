@@ -278,7 +278,7 @@ export default function Home() {
                 </div>
 
                 <div className={styles.col + ' ' + styles.inputGroup}>
-                  <label className={styles.label} htmlFor="num_groups">Number of Groups in Zone</label>
+                  <label className={styles.label} htmlFor="num_groups">Number of Groups in Your Zone</label>
                   <input
                     className={styles.input}
                     type="text"

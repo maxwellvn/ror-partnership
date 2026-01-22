@@ -14,6 +14,7 @@ interface Partnership {
   fullname: string;
   zone?: string;
   num_groups?: string;
+  group?: string;
   overall_target: string;
   print_target: string;
   digital_target: string;
@@ -742,6 +743,7 @@ export default function AdminPage() {
                     </th>
                     <th>Zone</th>
                     <th>Groups</th>
+                    <th>Group Name</th>
                     <th onClick={() => handleSort('overall_target')}>
                       Overall Target
                       <span className={`sort-indicator ${sortBy === 'overall_target' ? 'active' : ''}`}>
@@ -766,6 +768,7 @@ export default function AdminPage() {
                       <td className="name-cell">{submission.fullname}</td>
                       <td>{submission.zone ? <span className="zone-badge">{submission.zone}</span> : '-'}</td>
                       <td className="copies-cell">{submission.num_groups || '-'}</td>
+                      <td>{submission.group || '-'}</td>
                       <td className="copies-cell">{formatCopies(submission.overall_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.print_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.digital_target)}</td>
@@ -804,7 +807,11 @@ export default function AdminPage() {
                   </div>
                   <div className="modal-row">
                     <div className="modal-label">Number of Groups</div>
-                    <div className="modal-value">{selectedSubmission.num_groups || '0'}</div>
+                    <div className="modal-value">{selectedSubmission.num_groups || '-'}</div>
+                  </div>
+                  <div className="modal-row">
+                    <div className="modal-label">Group Name</div>
+                    <div className="modal-value">{selectedSubmission.group || '-'}</div>
                   </div>
                 </div>
 

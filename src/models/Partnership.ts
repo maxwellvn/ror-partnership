@@ -4,6 +4,7 @@ export interface IPartnership {
   fullname: string;
   zone?: string;
   num_groups?: string;
+  group?: string;
   overall_target: string;
   print_target: string;
   digital_target: string;
@@ -26,6 +27,10 @@ const PartnershipSchema = new Schema<IPartnership>(
     num_groups: {
       type: String,
       default: '0',
+    },
+    group: {
+      type: String,
+      trim: true,
     },
     overall_target: {
       type: String,

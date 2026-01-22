@@ -35,6 +35,7 @@ export default function GroupPastorsPage() {
     zone: '',
     zoneOther: '',
     num_groups: '',
+    group: '',
     overall_target: '',
     print_target: '',
     digital_target: '',
@@ -164,6 +165,7 @@ export default function GroupPastorsPage() {
           zone: '',
           zoneOther: '',
           num_groups: '',
+          group: '',
           overall_target: '',
           print_target: '',
           digital_target: '',
@@ -254,42 +256,26 @@ export default function GroupPastorsPage() {
                 />
               </div>
 
-              {/* Zone and Number of Groups */}
-              <div className={styles.row}>
-                <div className={styles.col + ' ' + styles.inputGroup}>
-                  <label className={styles.label} htmlFor="zone">Zone <span>*</span></label>
-                  <select
-                    className={styles.select}
-                    id="zone"
-                    name="zone"
-                    value={formData.zone}
-                    onChange={handleInputChange}
-                    required={!showZoneOther}
-                    disabled={zonesLoading}
-                  >
-                    <option value="">{zonesLoading ? 'Loading zones...' : 'Select Zone...'}</option>
-                    {zones.map((zone, index) => (
-                      <option key={zone.id || index} value={zone.name}>
-                        {zone.name}
-                      </option>
-                    ))}
-                    <option value="OTHER">Other (Specify below)</option>
-                  </select>
-                </div>
-
-                <div className={styles.col + ' ' + styles.inputGroup}>
-                  <label className={styles.label} htmlFor="num_groups">Number of Groups in Zone</label>
-                  <input
-                    className={styles.input}
-                    type="text"
-                    id="num_groups"
-                    name="num_groups"
-                    placeholder="0"
-                    value={formData.num_groups}
-                    onChange={handleNumberChange}
-                    onBlur={handleNumberBlur}
-                  />
-                </div>
+              {/* Zone */}
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="zone">Zone <span>*</span></label>
+                <select
+                  className={styles.select}
+                  id="zone"
+                  name="zone"
+                  value={formData.zone}
+                  onChange={handleInputChange}
+                  required={!showZoneOther}
+                  disabled={zonesLoading}
+                >
+                  <option value="">{zonesLoading ? 'Loading zones...' : 'Select Zone...'}</option>
+                  {zones.map((zone, index) => (
+                    <option key={zone.id || index} value={zone.name}>
+                      {zone.name}
+                    </option>
+                  ))}
+                  <option value="OTHER">Other (Specify below)</option>
+                </select>
               </div>
 
               {showZoneOther && (
@@ -307,6 +293,37 @@ export default function GroupPastorsPage() {
                   />
                 </div>
               )}
+
+              {/* Number of Groups */}
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="num_groups">Number of Groups in Your Zone <span>*</span></label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  id="num_groups"
+                  name="num_groups"
+                  placeholder="0"
+                  value={formData.num_groups}
+                  onChange={handleNumberChange}
+                  onBlur={handleNumberBlur}
+                  required
+                />
+              </div>
+
+              {/* Group Name */}
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="group">Group Name <span>*</span></label>
+                <input
+                  className={styles.input}
+                  type="text"
+                  id="group"
+                  name="group"
+                  placeholder="Enter your group name"
+                  value={formData.group}
+                  onChange={handleInputChange}
+                  required
+                />
+              </div>
 
               {/* Goal & Breakdown Container */}
               <div className={styles.goalSection}>
