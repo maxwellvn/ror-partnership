@@ -90,14 +90,16 @@ export default function Home() {
 
     // Handle "Other" selection for zone
     if (name === 'zone') {
+      // Clear group when zone changes
+      setFormData((prev) => ({ ...prev, group: '', groupOther: '' }));
+      setShowGroupOther(false);
+
       if (value === 'OTHER') {
         setShowZoneOther(true);
         setFormData((prev) => ({ ...prev, zone: '', zoneOther: '', group: '', groupOther: '' }));
-        setShowGroupOther(false);
       } else {
         setShowZoneOther(false);
         setFormData((prev) => ({ ...prev, zoneOther: '', group: '', groupOther: '' }));
-        setShowGroupOther(false);
       }
     }
 
@@ -112,7 +114,7 @@ export default function Home() {
       }
     }
 
-    // When groupOther is typed directly (zone has no groups), clear group
+    // When groupOther is typed directly, clear group selection
     if (name === 'groupOther' && value !== '') {
       setFormData((prev) => ({ ...prev, group: '' }));
     }
@@ -242,7 +244,7 @@ export default function Home() {
         <div className={styles.formSide}>
           <div className={styles.formContainer}>
             <div className={styles.formHeader}>
-              <h2>𝐘𝐎𝐔𝐑 𝟐𝟎𝟐𝟔 PARTNERSHIP 𝐏𝐋𝐀𝐍𝐒 𝐅𝐎𝐑 𝐓𝐇𝐄 𝐙𝐎𝐍𝐄</h2>
+              <h2>𝐘𝐎𝐔𝐑 𝟐𝟎𝟐𝟔 PARTNERSHIP 𝐏𝐋𝐀𝐍𝐒 𝐅𝐎𝐑 𝐓𝐇𝐄 𝐆𝐑𝐎𝐔𝐏</h2>
             </div>
 
             {submitMessage && (
@@ -304,59 +306,46 @@ export default function Home() {
                 </div>
               )}
 
-              {formData.zone && !showZoneOther && (() => {
-                const selectedZone = zones.find(z => z.name === formData.zone);
-                return selectedZone?.groups && selectedZone.groups.length > 0;
-              })() ? (
-                <>
-                  <div className={styles.inputGroup}>
-                    <label className={styles.label} htmlFor="group">Group</label>
-                    <select
-                      className={styles.input}
-                      id="group"
-                      name="group"
-                      value={formData.group}
-                      onChange={handleInputChange}
-                    >
-                      <option value="">Select your group (optional)</option>
-                      {zones.find(z => z.name === formData.zone)?.groups?.map((group, index) => (
-                        <option key={group.id || index} value={group.name}>
-                          {group.name}
-                        </option>
-                      ))}
-                      <option value="OTHER">Other (Specify below)</option>
-                    </select>
-                  </div>
-
-                  {showGroupOther && (
-                    <div className={styles.inputGroup}>
-                      <label className={styles.label} htmlFor="groupOther">Specify Group</label>
-                      <input
-                        className={styles.input}
-                        type="text"
-                        id="groupOther"
-                        name="groupOther"
-                        placeholder="Enter your group name"
-                        value={formData.groupOther}
-                        onChange={handleInputChange}
-                      />
-                    </div>
+              <div className={styles.inputGroup}>
+                <label className={styles.label} htmlFor="group">Group <span style={{color: '#dc2626'}}>*</span></label>
+                <select
+                  className={styles.input}
+                  id="group"
+                  name="group"
+                  value={formData.group}
+                  onChange={handleInputChange}
+                  disabled={zonesLoading || !formData.zone}
+                  required={(!showGroupOther && !showZoneOther)}
+                >
+                  <option value="">
+                    {!formData.zone ? 'Select a zone first' : zonesLoading ? 'Loading groups...' : 'Select your group'}
+                  </option>
+                  {zones.find(z => z.name === formData.zone)?.groups?.map((group) => (
+                    <option key={group.id} value={group.name}>
+                      {group.name}
+                    </option>
+                  ))}
+                  {formData.zone && zones.find(z => z.name === formData.zone)?.groups && zones.find(z => z.name === formData.zone)?.groups.length > 0 && (
+                    <option value="OTHER">Other (Specify below)</option>
                   )}
-                </>
-              ) : formData.zone && !showZoneOther ? (
+                </select>
+              </div>
+
+              {showGroupOther && (
                 <div className={styles.inputGroup}>
-                  <label className={styles.label} htmlFor="groupOther">Group</label>
+                  <label className={styles.label} htmlFor="groupOther">Specify Group <span style={{color: '#dc2626'}}>*</span></label>
                   <input
                     className={styles.input}
                     type="text"
                     id="groupOther"
                     name="groupOther"
-                    placeholder="Enter your group name (optional)"
+                    placeholder="Enter your group name"
                     value={formData.groupOther}
                     onChange={handleInputChange}
+                    required={showGroupOther}
                   />
                 </div>
-              ) : null}
+              )}
 
               <div className={styles.inputGroup}>
                 <label className={styles.label} htmlFor="overall_target">Faith Goal - Total number of copies <span style={{color: '#dc2626'}}>*</span></label>
