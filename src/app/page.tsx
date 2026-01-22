@@ -183,7 +183,7 @@ export default function Home() {
 
             {/* Chat UI */}
             <div className={styles.chatUi}>
-              <div className={styles.chatAvatar}>ROR</div>
+              <div className={styles.chatAvatar}><img src="/logo.webp" alt="ROR" style={{width: '100%', height: '100%', objectFit: 'contain'}} /></div>
               <div className={styles.chatBubble}>
                 <strong>Dear Esteemed Pastor,</strong><br /><br />
                 Warm greetings in the precious name of our Lord Jesus Christ.<br /><br />
