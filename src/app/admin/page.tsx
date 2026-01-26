@@ -19,7 +19,13 @@ interface Partnership {
   overall_target: string;
   print_target: string;
   digital_target: string;
-  campaigns?: string;
+  campaign_sytk?: string;
+  campaign_languages?: string;
+  campaign_teevolution?: string;
+  campaign_youths_aglow?: string;
+  campaign_nolb?: string;
+  wonder?: string;
+  crusades?: string;
   createdAt: string;
 }
 
@@ -831,7 +837,13 @@ export default function AdminPage() {
                     </th>
                     <th>Print</th>
                     <th>Digital</th>
-                    <th>Campaigns</th>
+                    <th>SYTK</th>
+                    <th>Languages</th>
+                    <th>Teevolution</th>
+                    <th>Youths Aglow</th>
+                    <th>NOLB</th>
+                    <th>Wonder</th>
+                    <th>Crusades</th>
                     <th onClick={() => handleSort('createdAt')}>
                       Date
                       <span className={`sort-indicator ${sortBy === 'createdAt' ? 'active' : ''}`}>
@@ -851,7 +863,13 @@ export default function AdminPage() {
                       <td className="copies-cell">{formatCopies(submission.overall_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.print_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.digital_target)}</td>
-                      <td>{submission.campaigns || '-'}</td>
+                      <td>{submission.campaign_sytk || '-'}</td>
+                      <td>{submission.campaign_languages || '-'}</td>
+                      <td>{submission.campaign_teevolution || '-'}</td>
+                      <td>{submission.campaign_youths_aglow || '-'}</td>
+                      <td>{submission.campaign_nolb || '-'}</td>
+                      <td>{submission.wonder || '-'}</td>
+                      <td>{submission.crusades || '-'}</td>
                       <td style={{ color: '#64748b', fontSize: '13px' }}>
                         {formatDate(submission.createdAt)}
                       </td>
@@ -915,10 +933,36 @@ export default function AdminPage() {
                 <div className="modal-section">
                   <div className="modal-section-title">Campaigns</div>
                   <div className="modal-row">
-                    <div className="modal-label">Campaigns (Wonder, Crusades)</div>
-                    <div className="modal-value">
-                      {selectedSubmission.campaigns || '-'}
-                    </div>
+                    <div className="modal-label">SYTK</div>
+                    <div className="modal-value">{selectedSubmission.campaign_sytk || '-'}</div>
+                  </div>
+                  <div className="modal-row">
+                    <div className="modal-label">LANGUAGES</div>
+                    <div className="modal-value">{selectedSubmission.campaign_languages || '-'}</div>
+                  </div>
+                  <div className="modal-row">
+                    <div className="modal-label">TEEVOLUTION</div>
+                    <div className="modal-value">{selectedSubmission.campaign_teevolution || '-'}</div>
+                  </div>
+                  <div className="modal-row">
+                    <div className="modal-label">YOUTHS AGLOW</div>
+                    <div className="modal-value">{selectedSubmission.campaign_youths_aglow || '-'}</div>
+                  </div>
+                  <div className="modal-row">
+                    <div className="modal-label">NOLB</div>
+                    <div className="modal-value">{selectedSubmission.campaign_nolb || '-'}</div>
+                  </div>
+                </div>
+
+                <div className="modal-section">
+                  <div className="modal-section-title">Other</div>
+                  <div className="modal-row">
+                    <div className="modal-label">Wonder</div>
+                    <div className="modal-value">{selectedSubmission.wonder || '-'}</div>
+                  </div>
+                  <div className="modal-row">
+                    <div className="modal-label">Crusades</div>
+                    <div className="modal-value">{selectedSubmission.crusades || '-'}</div>
                   </div>
                 </div>
 

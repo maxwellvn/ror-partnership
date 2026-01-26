@@ -38,7 +38,13 @@ export default function Home() {
     overall_target: '',
     print_target: '',
     digital_target: '',
-    campaigns: '',
+    campaign_sytk: '',
+    campaign_languages: '',
+    campaign_teevolution: '',
+    campaign_youths_aglow: '',
+    campaign_nolb: '',
+    wonder: '',
+    crusades: '',
   });
 
   const [showZoneOther, setShowZoneOther] = useState(false);
@@ -167,7 +173,13 @@ export default function Home() {
           overall_target: '',
           print_target: '',
           digital_target: '',
-          campaigns: '',
+          campaign_sytk: '',
+          campaign_languages: '',
+          campaign_teevolution: '',
+          campaign_youths_aglow: '',
+          campaign_nolb: '',
+          wonder: '',
+          crusades: '',
         });
         setShowZoneOther(false);
       } else {
@@ -362,17 +374,108 @@ export default function Home() {
                   </div>
                 </div>
 
-                <div className={styles.inputGroup} style={{ marginBottom: 0 }}>
-                  <label className={styles.label} htmlFor="campaigns">3. Campaigns (Wonder, Crusades)</label>
-                  <input
-                    className={styles.input}
-                    type="text"
-                    id="campaigns"
-                    name="campaigns"
-                    placeholder="0"
-                    value={formData.campaigns}
-                    onChange={handleInputChange}
-                  />
+                <div className={styles.inputGroup}>
+                  <label className={styles.label}>3. Campaigns</label>
+                </div>
+
+                <div className={styles.row}>
+                  <div className={styles.col + ' ' + styles.inputGroup}>
+                    <label className={styles.label} htmlFor="campaign_sytk">SYTK</label>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      id="campaign_sytk"
+                      name="campaign_sytk"
+                      placeholder="0"
+                      value={formData.campaign_sytk}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+                  <div className={styles.col + ' ' + styles.inputGroup}>
+                    <label className={styles.label} htmlFor="campaign_languages">LANGUAGES</label>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      id="campaign_languages"
+                      name="campaign_languages"
+                      placeholder="0"
+                      value={formData.campaign_languages}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.row}>
+                  <div className={styles.col + ' ' + styles.inputGroup}>
+                    <label className={styles.label} htmlFor="campaign_teevolution">TEEVOLUTION</label>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      id="campaign_teevolution"
+                      name="campaign_teevolution"
+                      placeholder="0"
+                      value={formData.campaign_teevolution}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+                  <div className={styles.col + ' ' + styles.inputGroup}>
+                    <label className={styles.label} htmlFor="campaign_youths_aglow">YOUTHS AGLOW</label>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      id="campaign_youths_aglow"
+                      name="campaign_youths_aglow"
+                      placeholder="0"
+                      value={formData.campaign_youths_aglow}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                </div>
+
+                <div className={styles.row}>
+                  <div className={styles.col + ' ' + styles.inputGroup}>
+                    <label className={styles.label} htmlFor="campaign_nolb">NOLB</label>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      id="campaign_nolb"
+                      name="campaign_nolb"
+                      placeholder="0"
+                      value={formData.campaign_nolb}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+                  <div className={styles.col}></div>
+                </div>
+
+                <div className={styles.row}>
+                  <div className={styles.col + ' ' + styles.inputGroup}>
+                    <label className={styles.label} htmlFor="wonder">4. Wonder</label>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      id="wonder"
+                      name="wonder"
+                      placeholder="0"
+                      value={formData.wonder}
+                      onChange={handleInputChange}
+                    />
+                  </div>
+
+                  <div className={styles.col + ' ' + styles.inputGroup}>
+                    <label className={styles.label} htmlFor="crusades">5. Crusades</label>
+                    <input
+                      className={styles.input}
+                      type="text"
+                      id="crusades"
+                      name="crusades"
+                      placeholder="0"
+                      value={formData.crusades}
+                      onChange={handleInputChange}
+                    />
+                  </div>
                 </div>
               </div>
 
