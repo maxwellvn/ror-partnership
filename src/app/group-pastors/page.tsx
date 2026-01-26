@@ -451,7 +451,7 @@ export default function GroupPastorsPage() {
 
                 <div className={styles.row}>
                   <div className={styles.col + ' ' + styles.inputGroup}>
-                    <label className={styles.label} htmlFor="wonder">4. Wonder</label>
+                    <label className={styles.label} htmlFor="wonder">4. Rhapsody Wonder</label>
                     <input
                       className={styles.input}
                       type="text"

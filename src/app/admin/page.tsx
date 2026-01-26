@@ -837,12 +837,8 @@ export default function AdminPage() {
                     </th>
                     <th>Print</th>
                     <th>Digital</th>
-                    <th>SYTK</th>
-                    <th>Languages</th>
-                    <th>Teevolution</th>
-                    <th>Youths Aglow</th>
-                    <th>NOLB</th>
-                    <th>Wonder</th>
+                    <th>Campaigns</th>
+                    <th>Rhapsody Wonder</th>
                     <th>Crusades</th>
                     <th onClick={() => handleSort('createdAt')}>
                       Date
@@ -863,11 +859,15 @@ export default function AdminPage() {
                       <td className="copies-cell">{formatCopies(submission.overall_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.print_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.digital_target)}</td>
-                      <td>{submission.campaign_sytk || '-'}</td>
-                      <td>{submission.campaign_languages || '-'}</td>
-                      <td>{submission.campaign_teevolution || '-'}</td>
-                      <td>{submission.campaign_youths_aglow || '-'}</td>
-                      <td>{submission.campaign_nolb || '-'}</td>
+                      <td>
+                        {[
+                          submission.campaign_sytk && `SYTK: ${submission.campaign_sytk}`,
+                          submission.campaign_languages && `Languages: ${submission.campaign_languages}`,
+                          submission.campaign_teevolution && `Teevolution: ${submission.campaign_teevolution}`,
+                          submission.campaign_youths_aglow && `Youths Aglow: ${submission.campaign_youths_aglow}`,
+                          submission.campaign_nolb && `NOLB: ${submission.campaign_nolb}`,
+                        ].filter(Boolean).join(', ') || '-'}
+                      </td>
                       <td>{submission.wonder || '-'}</td>
                       <td>{submission.crusades || '-'}</td>
                       <td style={{ color: '#64748b', fontSize: '13px' }}>
@@ -955,11 +955,15 @@ export default function AdminPage() {
                 </div>
 
                 <div className="modal-section">
-                  <div className="modal-section-title">Other</div>
+                  <div className="modal-section-title">Rhapsody Wonder</div>
                   <div className="modal-row">
-                    <div className="modal-label">Wonder</div>
+                    <div className="modal-label">Rhapsody Wonder</div>
                     <div className="modal-value">{selectedSubmission.wonder || '-'}</div>
                   </div>
+                </div>
+
+                <div className="modal-section">
+                  <div className="modal-section-title">Crusades</div>
                   <div className="modal-row">
                     <div className="modal-label">Crusades</div>
                     <div className="modal-value">{selectedSubmission.crusades || '-'}</div>
