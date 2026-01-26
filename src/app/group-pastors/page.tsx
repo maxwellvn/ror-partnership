@@ -38,11 +38,7 @@ export default function GroupPastorsPage() {
     overall_target: '',
     print_target: '',
     digital_target: '',
-    campaign_sytk: '',
-    campaign_languages: '',
-    campaign_teevolution: '',
-    campaign_youths_aglow: '',
-    campaign_nolb: '',
+    campaigns: '',
     wonder: '',
     crusades: '',
   });
@@ -173,11 +169,7 @@ export default function GroupPastorsPage() {
           overall_target: '',
           print_target: '',
           digital_target: '',
-          campaign_sytk: '',
-          campaign_languages: '',
-          campaign_teevolution: '',
-          campaign_youths_aglow: '',
-          campaign_nolb: '',
+          campaigns: '',
           wonder: '',
           crusades: '',
         });
@@ -374,79 +366,16 @@ export default function GroupPastorsPage() {
                 </div>
 
                 <div className={styles.inputGroup}>
-                  <label className={styles.label}>3. Campaigns</label>
-                </div>
-
-                <div className={styles.row}>
-                  <div className={styles.col + ' ' + styles.inputGroup}>
-                    <label className={styles.label} htmlFor="campaign_sytk">SYTK</label>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      id="campaign_sytk"
-                      name="campaign_sytk"
-                      placeholder="0"
-                      value={formData.campaign_sytk}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-
-                  <div className={styles.col + ' ' + styles.inputGroup}>
-                    <label className={styles.label} htmlFor="campaign_languages">LANGUAGES</label>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      id="campaign_languages"
-                      name="campaign_languages"
-                      placeholder="0"
-                      value={formData.campaign_languages}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.row}>
-                  <div className={styles.col + ' ' + styles.inputGroup}>
-                    <label className={styles.label} htmlFor="campaign_teevolution">TEEVOLUTION</label>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      id="campaign_teevolution"
-                      name="campaign_teevolution"
-                      placeholder="0"
-                      value={formData.campaign_teevolution}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-
-                  <div className={styles.col + ' ' + styles.inputGroup}>
-                    <label className={styles.label} htmlFor="campaign_youths_aglow">YOUTHS AGLOW</label>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      id="campaign_youths_aglow"
-                      name="campaign_youths_aglow"
-                      placeholder="0"
-                      value={formData.campaign_youths_aglow}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                </div>
-
-                <div className={styles.row}>
-                  <div className={styles.col + ' ' + styles.inputGroup}>
-                    <label className={styles.label} htmlFor="campaign_nolb">NOLB</label>
-                    <input
-                      className={styles.input}
-                      type="text"
-                      id="campaign_nolb"
-                      name="campaign_nolb"
-                      placeholder="0"
-                      value={formData.campaign_nolb}
-                      onChange={handleInputChange}
-                    />
-                  </div>
-                  <div className={styles.col}></div>
+                  <label className={styles.label} htmlFor="campaigns">3. Campaigns (SYTK, Languages, Teevolution, Youths Aglow, NOLB)</label>
+                  <input
+                    className={styles.input}
+                    type="text"
+                    id="campaigns"
+                    name="campaigns"
+                    placeholder="0"
+                    value={formData.campaigns}
+                    onChange={handleInputChange}
+                  />
                 </div>
 
                 <div className={styles.row}>

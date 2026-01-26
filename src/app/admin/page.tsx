@@ -19,11 +19,7 @@ interface Partnership {
   overall_target: string;
   print_target: string;
   digital_target: string;
-  campaign_sytk?: string;
-  campaign_languages?: string;
-  campaign_teevolution?: string;
-  campaign_youths_aglow?: string;
-  campaign_nolb?: string;
+  campaigns?: string;
   wonder?: string;
   crusades?: string;
   createdAt: string;
@@ -859,15 +855,7 @@ export default function AdminPage() {
                       <td className="copies-cell">{formatCopies(submission.overall_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.print_target)}</td>
                       <td className="copies-cell">{formatCopies(submission.digital_target)}</td>
-                      <td>
-                        {[
-                          submission.campaign_sytk && `SYTK: ${submission.campaign_sytk}`,
-                          submission.campaign_languages && `Languages: ${submission.campaign_languages}`,
-                          submission.campaign_teevolution && `Teevolution: ${submission.campaign_teevolution}`,
-                          submission.campaign_youths_aglow && `Youths Aglow: ${submission.campaign_youths_aglow}`,
-                          submission.campaign_nolb && `NOLB: ${submission.campaign_nolb}`,
-                        ].filter(Boolean).join(', ') || '-'}
-                      </td>
+                      <td>{submission.campaigns || '-'}</td>
                       <td>{submission.wonder || '-'}</td>
                       <td>{submission.crusades || '-'}</td>
                       <td style={{ color: '#64748b', fontSize: '13px' }}>
@@ -931,39 +919,15 @@ export default function AdminPage() {
                 </div>
 
                 <div className="modal-section">
-                  <div className="modal-section-title">Campaigns</div>
+                  <div className="modal-section-title">Campaigns, Wonder & Crusades</div>
                   <div className="modal-row">
-                    <div className="modal-label">SYTK</div>
-                    <div className="modal-value">{selectedSubmission.campaign_sytk || '-'}</div>
+                    <div className="modal-label">Campaigns (SYTK, Languages, Teevolution, Youths Aglow, NOLB)</div>
+                    <div className="modal-value">{selectedSubmission.campaigns || '-'}</div>
                   </div>
-                  <div className="modal-row">
-                    <div className="modal-label">LANGUAGES</div>
-                    <div className="modal-value">{selectedSubmission.campaign_languages || '-'}</div>
-                  </div>
-                  <div className="modal-row">
-                    <div className="modal-label">TEEVOLUTION</div>
-                    <div className="modal-value">{selectedSubmission.campaign_teevolution || '-'}</div>
-                  </div>
-                  <div className="modal-row">
-                    <div className="modal-label">YOUTHS AGLOW</div>
-                    <div className="modal-value">{selectedSubmission.campaign_youths_aglow || '-'}</div>
-                  </div>
-                  <div className="modal-row">
-                    <div className="modal-label">NOLB</div>
-                    <div className="modal-value">{selectedSubmission.campaign_nolb || '-'}</div>
-                  </div>
-                </div>
-
-                <div className="modal-section">
-                  <div className="modal-section-title">Rhapsody Wonder</div>
                   <div className="modal-row">
                     <div className="modal-label">Rhapsody Wonder</div>
                     <div className="modal-value">{selectedSubmission.wonder || '-'}</div>
                   </div>
-                </div>
-
-                <div className="modal-section">
-                  <div className="modal-section-title">Crusades</div>
                   <div className="modal-row">
                     <div className="modal-label">Crusades</div>
                     <div className="modal-value">{selectedSubmission.crusades || '-'}</div>
